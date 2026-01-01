@@ -1,111 +1,199 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fiche d'identité - Obsidian Chrome</title>
-    <link rel="stylesheet" href="fiche.css" />
-    <script src="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.min.js"></script>
-  </head>
-  <body>
-    <!-- Digicode -->
-    <div id="accessScreen">
-      <div id="digicode">
-        <h1>Accès restreint</h1>
-        <p>Entrez le code d'autorisation</p>
-        <div id="displayCode">····</div>
-        <div id="buttons"></div>
-
-        <!-- Ligne de boutons spéciaux -->
-        <div id="special-buttons">
-          <button id="btnSuppr" class="special-btn suppr">❌</button>
-          <button id="btnValider" class="special-btn valider">✅</button>
-        </div>
-
-        <p id="errorMsg" class="hidden">Code incorrect</p>
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche d'identité - Obsidian Chrome | Consortium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="fiche.css">
+    <link rel="icon" href="Media/od.png" />
+</head>
+<body>
+    <!-- Vidéo de fond en boucle -->
+    <div id="bgVideo">
+        <video autoplay muted loop playsinline>
+            <source src="Media/loop_bg.webm" type="video/webm">
+        </video>
     </div>
 
-    <!-- Fiche -->
-    <div id="fiche" class="fade-in">
-      <header>
-        <h1>Fiche d'identité</h1>
-        <p>Obsidian Chrome</p>
-
-        <div id="musicPlayer">
-          <div class="music-controls">
-            <button id="playPauseBtn">▶</button>
-            <span id="trackTitle">Nyhxia - SiLvEr.exe</span>
-            <div class="volume-group">
-              <label for="volumeSlider">🔊</label>
-              <input
-                type="range"
-                id="volumeSlider"
-                min="0"
-                max="100"
-                value="40"
-              />
+    <!-- Écran d'accès avec digicode -->
+    <div id="accessScreen">
+        <div id="digicode">
+            <div class="digicode-header">
+                <h1>ACCÈS RESTREINT</h1>
+                <p class="subtitle">Code d'autorisation requis</p>
             </div>
-          </div>
-          <input type="range" id="progressBar" value="0" min="0" max="100" />
+            
+            <div id="displayCode">····</div>
+            
+            <div id="buttons"></div>
+            
+            <div id="specialButtons">
+                <button id="btnSuppr" class="special-btn suppr">
+                    <i class="fas fa-backspace"></i>
+                    <span class="btn-label">Suppr</span>
+                </button>
+                <button id="btnValider" class="special-btn valider">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="btn-label">Valider</span>
+                </button>
+            </div>
+            
+            <p id="errorMsg"><i class="fas fa-exclamation-triangle"></i> CODE INCORRECT</p>
+            
+            <button id="btnGuest" class="guest-btn">
+                <i class="fas fa-user-shield"></i>
+                <span>Accès Invité</span>
+            </button>
         </div>
-      </header>
+    </div>
 
-      <section class="flex-section">
-        <div class="image-section">
-          <div class="carousel-buttons">
-            <button id="btnCivil">Civil</button>
-            <button id="btnChasseur">Chasseur</button>
-          </div>
-          <img
-            id="ficheImage"
-            src="/Media/25102025_01.png"
-            alt="Selim Dousan (civil)"
-          />
+    <!-- Écran de chargement -->
+    <div id="loadingScreen">
+        <video id="loadingVideo" autoplay muted playsinline>
+            <source src="Media/loading.webm" type="video/webm">
+        </video>
+    </div>
+
+    <!-- Fiche d'identité -->
+    <div id="fiche">
+        <div class="fiche-container">
+            <!-- En-tête avec lecteur audio -->
+            <header class="fiche-header">
+                <div class="header-content">
+                    <h1>FICHE D'IDENTITÉ</h1>
+                    <p class="subtitle">Obsidian Chrome</p>
+                </div>
+                
+                <div class="music-players">
+                    <div id="musicPlayer" class="music-player">
+                        <div class="music-controls">
+                            <button id="playPauseBtn" class="music-btn"><i class="fas fa-play"></i></button>
+                            <span id="trackTitle">Nyhxia - SiLvEr.exe</span>
+                            <div class="volume-group">
+                                <i class="fas fa-volume-up volume-icon"></i>
+                                <input type="range" id="volumeSlider" min="0" max="100" value="40">
+                            </div>
+                        </div>
+                        <input type="range" id="progressBar" value="0" min="0" max="100">
+                    </div>
+
+                    <div id="musicPlayer2" class="music-player">
+                        <div class="music-controls">
+                            <button id="playPauseBtn2" class="music-btn"><i class="fas fa-play"></i></button>
+                            <span id="trackTitle2">Cyber Reality - Montée</span>
+                            <div class="volume-group">
+                                <i class="fas fa-volume-up volume-icon"></i>
+                                <input type="range" id="volumeSlider2" min="0" max="100" value="40">
+                            </div>
+                        </div>
+                        <input type="range" id="progressBar2" value="0" min="0" max="100">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Section principale : Image + Profil -->
+            <section class="main-section">
+                <div class="image-container">
+                    <div class="image-wrapper">
+                        <img id="ficheImage" src="Media/25102025_01.png" alt="Selim Dousan (civil)">
+                        <button id="toggleBtn" class="toggle-btn" data-mode="civil">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-container">
+                    <article class="info-card">
+                        <h2>PROFIL GÉNÉRAL & STATUT</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Nom complet</span>
+                                <span class="value">Selim Dousan</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Alias</span>
+                                <span class="value">Obsidian Chrome</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Âge</span>
+                                <span class="value">33 ans</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Origine</span>
+                                <span class="value">Thanalan</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Rang</span>
+                                <span class="value">Élite</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Statut</span>
+                                <span class="value status-active">Actif</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Section grille : Compétences + Équipement -->
+            <section class="grid-section restricted-content">
+                <article class="info-card">
+                    <h2>COMPÉTENCES & SPÉCIALISATION</h2>
+                    <ul class="feature-list">
+                        <li>Expert en traque et capture</li>
+                        <li>Maîtrise des armes à feu, des pistolames et des gadgets</li>
+                        <li>Discrétion, précision et infiltration</li>
+                        <li>Réseautage important</li>
+                        <li>Talent d'improvisation et d'adaptation</li>
+                    </ul>
+                </article>
+                
+                <article class="info-card">
+                    <h2>ÉQUIPEMENT ENREGISTRÉ</h2>
+                    <ul class="feature-list">
+                        <li>Bras gauche expérimental en titane - Modèle X-01 classe Rudiger</li>
+                        <li>Visor N7 (vision thermique & assistance à la visée) - Modèle modifié classe Rudiger</li>
+                        <li>Armure Chrome-Tek - Modèle modifié classe Rudiger</li>
+                        <li>Pistolets Malorian 148 - Modèle modifié classe Rudiger</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="medical-section restricted-content">
+                <article class="info-card">
+                    <h2>SECTION MÉDICALE / BLESSURES</h2>
+                    <div class="medical-container">
+                        <div class="med-left">
+                            <div class="med-diagram">
+                                <img class="diagram-image" src="Media/selim_eta.png" alt="Schéma corporel de Selim avec prothèse bras gauche">
+                                <span class="med-dot" style="--x:66%; --y:42%;" tabindex="0" aria-label="Bras gauche" data-title="Bras gauche" data-text="Prothèse modèle X-01 classe Rudiger pour bras gauche. Prodigué à la suite d'une amputation, le bras manquant endommagé par un explosif. Aucun rejet enregistré. Intégrité du patient tranche haute (5% de la population éligible). Omoplate en titane renforcée pour une utilisation optimale du bras."></span>
+                                <span class="med-dot" style="--x:48%; --y:28%;" tabindex="0" aria-label="Général" data-title="Général" data-text="Cicatrices et brûlures dû à l'explosif sur une grande partie du corps (excepté visage). D'autres cicatrices sont plus anciennes."></span>
+                                <span class="med-dot" style="--x:48%; --y:45%;" tabindex="0" aria-label="Bas du dos" data-title="Bas du dos" data-text="Rachis lombaire touché. Reconstruction de vertèbres et rééducation pour retour à l'activité optimale."></span>
+                            </div>
+
+                            <div class="med-video">
+                                <video id="medChart" preload="metadata" muted playsinline>
+                                    <source src="Media/chart_eta.webm" type="video/webm">
+                                </video>
+                            </div>
+                        </div>
+
+                        <div class="med-info" aria-live="polite">
+                            <h3 id="medInfoTitle">Détails médicaux</h3>
+                            <div id="medInfoText" class="med-info-content">Cliquez une zone du schéma pour afficher les détails ici.</div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Pied de page -->
+            <footer class="fiche-footer restricted-content">
+                <p><i class="fas fa-exclamation-triangle"></i> ACCÈS RESTREINT NIVEAU SIGMA - SECTEUR ODYSSÉE <i class="fas fa-exclamation-triangle"></i></p>
+            </footer>
         </div>
-
-        <div class="profile-section">
-          <article>
-            <h2>Profil général & Statut</h2>
-            <p><span>Nom complet :</span> Selim Dousan</p>
-            <p><span>Alias :</span> Obsidian Chrome</p>
-            <p><span>Âge :</span> 33 ans</p>
-            <p><span>Origine :</span> Thanalan</p>
-            <p><span>Rang :</span> Élite</p>
-            <p><span>Statut :</span> Actif</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="grid-section">
-        <article>
-          <h2>Compétences & Spécialisation</h2>
-          <ul>
-            <li>Expert en traque et capture</li>
-            <li>Maîtrise des armes à feu, des pistolames et des gadgets</li>
-            <li>Discrétion, précision et infiltration</li>
-          </ul>
-        </article>
-        <article>
-          <h2>Équipement enregistré</h2>
-          <ul>
-            <li>
-              Bras gauche expérimental en titane - Modèle X-01 classe Rudiger
-            </li>
-            <li>
-              Visor N7 (vision thermique & assistance à la visée) - Modèle
-              modifié classe Rudiger
-            </li>
-            <li>Armure Chrome-Tek - Modèle modifié classe Rudiger</li>
-            <li>Pistolets Malorian 148 - Modèle modifié classe Rudiger</li>
-          </ul>
-        </article>
-      </section>
-
-      <footer>Accès restreint Niveau Sigma - Secteur Odyssée</footer>
     </div>
 
     <script src="fiche.js"></script>
-  </body>
+</body>
 </html>

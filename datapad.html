@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL - CONSORTIUM DATABASE ACCESS</title>
+    <link rel="stylesheet" href="datapad.css">
+    <link rel="icon" href="Media/od.png" />
+</head>
+<body>
+    <div class="main-layout">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <span class="terminal-title">█ CONSORTIUM TERMINAL v2.7.3</span>
+                <span class="terminal-status" id="systemStatus">SYSTEM ONLINE</span>
+            </div>
+
+            <div class="terminal-output" id="terminalOutput">
+                <div id="loadingVideo" class="loading-video-container">
+                    <video id="bootVideo" autoplay muted playsinline preload="auto">
+                        <source src="Media/FootageCrate-4K_Modern_HUD_Globe_1-matte.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="boot-sequence" id="bootSequence" style="display: none;">
+                    <p>&gt; Initializing Consortium Database Terminal...</p>
+                    <p>&gt; Loading kernel modules... [OK]</p>
+                    <p>&gt; Establishing secure connection... [OK]</p>
+                    <p>&gt; Verifying credentials... [BYPASSED]</p>
+                    <p>&gt; WARNING: Unauthorized access detected</p>
+                    <p>&gt; System ready. Type 'help' for available commands.</p>
+                    <p class="separator">═════════════════════════════════════════════════════</p>
+                </div>
+            </div>
+
+            <div class="terminal-input-area">
+                <span class="prompt">&gt; </span>
+                <input type="text" id="terminalInput" class="terminal-input" autocomplete="off" autofocus>
+                <span class="cursor">█</span>
+            </div>
+
+            <div class="terminal-footer">
+                <div class="footer-info">
+                    <span>INTRUSION LEVEL: <span id="intrusionLevel">0%</span></span>
+                    <span class="separator-dot">•</span>
+                    <span>MODULES UNLOCKED: <span id="modulesUnlocked">0/4</span></span>
+                    <span class="separator-dot">•</span>
+                    <span id="timestamp">00:00:00</span>
+                    <span class="separator-dot" id="timerSeparator" style="display: none;">•</span>
+                    <span id="countdown" style="display: none;">TIMER: <span id="countdownValue">05:00</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modules-panel" id="modulesPanel">
+            <div class="panel-header">
+                <h2>MODULES DÉVERROUILLÉS</h2>
+            </div>
+            <div class="panel-content" id="panelContent">
+                <p class="empty-message">Aucun module déverrouillé</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dataStore" style="display: none;">
+        <div id="identityData">
+            <p>MODULE 01: IDENTITÉ</p>
+            <p></p>
+            <p>Nom complet    : Rudiger Vladimoskov</p>
+            <p>Alias          : Failsafe</p>
+            <p>Statut         : Signal localisé</p>
+            <p>Classification : NIVEAU ALPHA</p>
+        </div>
+
+        <div id="locationData">
+            <p>MODULE 02: LOCALISATION</p>
+            <p></p>
+            <p>Secteur     : District Alpha-7</p>
+            <p>Coordonnées : 47.2N, 122.3W</p>
+            <p>Signal      : Stabilisation réussie</p>
+            <p>Altitude    : 156y</p>
+        </div>
+
+        <div id="contractsData">
+            <p>MODULE 03: CONTRATS</p>
+            <p></p>
+            <p>[1] Contrat Alpha - Capture vivante</p>
+            <p>[2] Contrat Beta - Élimination discrète</p>
+            <p>[3] Contrat Gamma - Protection VIP</p>
+            <p>[4] Contrat Sigma - [CLASSIFIÉ]</p>
+        </div>
+
+        <div id="classifiedData">
+            <p>MODULE 04: DOSSIERS CLASSIFIÉS</p>
+            <p></p>
+            <p>███ ACCÈS NIVEAU SIGMA REQUIS ███</p>
+            <p></p>
+            <p>[.\HeXeD/.]</p>
+            <p></p>
+            <p>███ ACCÈS NIVEAU SIGMA AUTORISÉ ███</p>
+            <p></p>
+            <p>Notes secrètes, blacklists, relations</p>
+            <p>et informations hautement sensibles.</p>
+        </div>
+    </div>
+
+    <div id="videoOverlay" class="video-overlay">
+        <video id="overlayVideo" muted>
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+
+    <script src="datapad.js"></script>
+</body>
+</html>
