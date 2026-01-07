@@ -1,114 +1,180 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TERMINAL - CONSORTIUM DATABASE ACCESS</title>
-    <link rel="stylesheet" href="datapad.css">
+    <link rel="stylesheet" href="datapad.css" />
     <link rel="icon" href="Media/od.png" />
-</head>
-<body>
+  </head>
+  <body>
     <div class="main-layout">
-        <div class="terminal-container">
-            <div class="terminal-header">
-                <span class="terminal-title">█ CONSORTIUM TERMINAL v2.7.3</span>
-                <span class="terminal-status" id="systemStatus">SYSTEM ONLINE</span>
-            </div>
-
-            <div class="terminal-output" id="terminalOutput">
-                <div id="loadingVideo" class="loading-video-container">
-                    <video id="bootVideo" autoplay muted playsinline preload="auto">
-                        <source src="Media/FootageCrate-4K_Modern_HUD_Globe_1-matte.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="boot-sequence" id="bootSequence" style="display: none;">
-                    <p>&gt; Initializing Consortium Database Terminal...</p>
-                    <p>&gt; Loading kernel modules... [OK]</p>
-                    <p>&gt; Establishing secure connection... [OK]</p>
-                    <p>&gt; Verifying credentials... [BYPASSED]</p>
-                    <p>&gt; WARNING: Unauthorized access detected</p>
-                    <p>&gt; System ready. Type 'help' for available commands.</p>
-                    <p class="separator">═════════════════════════════════════════════════════</p>
-                </div>
-            </div>
-
-            <div class="terminal-input-area">
-                <span class="prompt">&gt; </span>
-                <input type="text" id="terminalInput" class="terminal-input" autocomplete="off" autofocus>
-                <span class="cursor">█</span>
-            </div>
-
-            <div class="terminal-footer">
-                <div class="footer-info">
-                    <span>INTRUSION LEVEL: <span id="intrusionLevel">0%</span></span>
-                    <span class="separator-dot">•</span>
-                    <span>MODULES UNLOCKED: <span id="modulesUnlocked">0/4</span></span>
-                    <span class="separator-dot">•</span>
-                    <span id="timestamp">00:00:00</span>
-                    <span class="separator-dot" id="timerSeparator" style="display: none;">•</span>
-                    <span id="countdown" style="display: none;">TIMER: <span id="countdownValue">05:00</span></span>
-                </div>
-            </div>
+      <div class="terminal-container">
+        <div class="terminal-header">
+          <span class="terminal-title">█ CONSORTIUM TERMINAL v2.7.3</span>
+          <span class="terminal-status" id="systemStatus">SYSTEM ONLINE</span>
         </div>
 
-        <div class="modules-panel" id="modulesPanel">
-            <div class="panel-header">
-                <h2>MODULES DÉVERROUILLÉS</h2>
-            </div>
-            <div class="panel-content" id="panelContent">
-                <p class="empty-message">Aucun module déverrouillé</p>
-            </div>
+        <div class="terminal-output" id="terminalOutput">
+          <div id="loadingVideo" class="loading-video-container">
+            <video id="bootVideo" autoplay muted playsinline preload="auto">
+              <source
+                src="Media/FootageCrate-4K_Modern_HUD_Globe_1-matte.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+          <div class="boot-sequence" id="bootSequence" style="display: none">
+            <p>&gt; Initializing Consortium Database Terminal...</p>
+            <p>&gt; Loading kernel modules... [OK]</p>
+            <p>&gt; Establishing secure connection... [OK]</p>
+            <p>&gt; Verifying credentials... [BYPASSED]</p>
+            <p>&gt; WARNING: Unauthorized access detected</p>
+            <p>&gt; System ready. Type 'help' for available commands.</p>
+            <p class="separator">
+              ═════════════════════════════════════════════════════
+            </p>
+          </div>
         </div>
+
+        <div class="terminal-input-area">
+          <span class="prompt">&gt; </span>
+          <input
+            type="text"
+            id="terminalInput"
+            class="terminal-input"
+            autocomplete="off"
+            autofocus
+          />
+          <span class="cursor">█</span>
+        </div>
+
+        <div class="terminal-footer">
+          <div class="footer-info">
+            <span>INTRUSION LEVEL: <span id="intrusionLevel">0%</span></span>
+            <span class="separator-dot">•</span>
+            <span
+              >MODULES: <span id="modulesUnlocked">0/4</span>
+              <span id="unlockedModulesList"></span
+            ></span>
+            <span class="separator-dot">•</span>
+            <span id="timestamp">00:00:00</span>
+            <span
+              class="separator-dot"
+              id="timerSeparator"
+              style="display: none"
+              >•</span
+            >
+            <span id="countdown" style="display: none"
+              >TIMER: <span id="countdownValue">05:00</span></span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="modules-panel" id="modulesPanel">
+        <div class="panel-header">
+          <h2>MODULES DÉVERROUILLÉS</h2>
+        </div>
+        <div class="panel-content" id="panelContent">
+          <p class="empty-message">Aucun module déverrouillé</p>
+        </div>
+      </div>
     </div>
 
-    <div id="dataStore" style="display: none;">
-        <div id="identityData">
-            <p>MODULE 01: IDENTITÉ</p>
-            <p></p>
-            <p>Nom complet    : Rudiger Vladimoskov</p>
-            <p>Alias          : Failsafe</p>
-            <p>Statut         : Signal localisé</p>
-            <p>Classification : NIVEAU ALPHA</p>
-        </div>
+    <div id="dataStore" style="display: none">
+      <div id="identityData">
+        <p>MODULE 01: IDENTITÉ</p>
+        <p></p>
+        <p>Nom complet : Rudiger Vladimoskov</p>
+        <p>Alias : Failsafe</p>
+        <p>Statut : Signal localisé</p>
+        <p>Classification : NIVEAU ALPHA</p>
+      </div>
 
-        <div id="locationData">
-            <p>MODULE 02: LOCALISATION</p>
-            <p></p>
-            <p>Secteur     : District Alpha-7</p>
-            <p>Coordonnées : 47.2N, 122.3W</p>
-            <p>Signal      : Stabilisation réussie</p>
-            <p>Altitude    : 156y</p>
-        </div>
+      <div id="locationData">
+        <p>MODULE 02: LOCALISATION</p>
+        <p></p>
+        <p>Secteur : District Alpha-7</p>
+        <p>Coordonnées : 47.2N, 122.3W</p>
+        <p>Signal : Stabilisation réussie</p>
+        <p>Altitude : 156y</p>
+      </div>
 
-        <div id="contractsData">
-            <p>MODULE 03: CONTRATS</p>
-            <p></p>
-            <p>[1] Contrat Alpha - Capture vivante</p>
-            <p>[2] Contrat Beta - Élimination discrète</p>
-            <p>[3] Contrat Gamma - Protection VIP</p>
-            <p>[4] Contrat Sigma - [CLASSIFIÉ]</p>
-        </div>
+      <div id="contractsData">
+        <p>MODULE 03: CONTRATS</p>
+        <p></p>
+        <p><strong></strong>CONTRAT #A-4472</strong></p>
+        <p>Alias principal : Obsidian Chrome<br>
+        Support technique : Failsafe (non listé officiellement)<br>
+        Statut : Exécuté - confirmé</p>
+        <p>Cible : Jax "Redline" Morano<br>
+        Type : Extraction + neutralisation<br>
+        Zone : Dock industriel N-9, Old Harbor</p>
+        <p>Surveillance active des flux de caméras et des capteurs thermiques du secteur. Failsafe a injecté un faux protocole de maintenance dans le réseau portuaire, offrant à Obsidian Chrome une fenêtre d'accès de 92 secondes sans alerte. La cible a été interceptée à la sortie du hangar 3. Neutralisation propre. Aucun témoin enregistré. Données locales purgées automatiquement 14 secondes après l'exfiltration.</p>
+        <p>Note système : Intervention technique non revendiquée. Signature réseau partiellement masquée.</p>
+        <p></p>
+        <p>═════════════════════════════════════════════════════</p>
+        <p></p>
+        <p><strong>CONTRAT #B-8891</strong></p>
+        <p>Alias principal : Obsidian Chrome<br>
+        Support technique : Failsafe<br>
+        Statut : Exécuté - paiement validé</p>
+        <p>Cible : Dr. Eliane Koresh<br>
+        Type : Extaction - Livraison aux autorités<br>
+        Zone : Tour résidentielle Helix, étage 42</p>
+        <p>Failsafe a pris le contrôle du système domotique et des implants de sécurité de la cible. Obsidian Chrome est entré sans résistance. Les données extraites concernaient des recherches biomécaniques non déclarées. La cible a été laissée en vie, mais amenée aux autorités compétentes.</p>
+        <p>Note système : Les logs montrent une coordination fluide.</p>
+        <p></p>
+        <p>═════════════════════════════════════════════════════</p>
+        <p></p>
+        <p><strong>CONTRAT #C-9910</strong></p>
+        <p>Alias principal : Obsidian Chrome<br>
+        Support déclaré : Failsafe<br>
+        Statut : Exécuté / Anomalie critique</p>
+        <p>Cible : Cadre exécutif Fugasaka (ID interne masqué)<br>
+        Type : Neutralisation discrète<br>
+        Zone : Secteur Corpo - Complexe Fugasaka, Tour Est</p>
+        <p>Failsafe a fourni les accès réseau initiaux et ouvert une fenêtre temporaire sur les systèmes d'implants de la cible. Obsidian Chrome a atteint la position sans résistance. À T+3 minutes, une surcharge neurale massive a été détectée sur l'implant cortical de la cible.</p>
+        <p>Décès déclaré comme accident implantaire. Les systèmes Fugasaka confirment une défaillance interne non imputable à une action externe.</p>
+        <p><strong>Analyse post-incident :</strong><br>
+        La signature de la surcharge correspond à une séquence d'accès de maintenance avancée, habituellement réservée aux ingénieurs certifiés Fugasaka. Failsafe avait signalé un risque mineur de latence implant, sans recommander l'abandon du contrat. Les paramètres utilisés dépassent cependant le seuil nécessaire à une simple intimidation.</p>
+        <p><strong>Note système :</strong><br>
+        Quelque chose cloche. La surcharge n'était ni aléatoire, ni nécessaire. Les timings sont trop propres, les accès trop précis. Ce genre d'issue ne survient pas par hasard.</p>
+        <p><strong>Conclusion :</strong><br>
+        Contrat officiellement clos et validé. Une enquête interne non déclarée est toutefois en préparation concernant les méthodes employées par le support technique sur cette opération.</p>
+      </div>
 
-        <div id="classifiedData">
-            <p>MODULE 04: DOSSIERS CLASSIFIÉS</p>
-            <p></p>
-            <p>███ ACCÈS NIVEAU SIGMA REQUIS ███</p>
-            <p></p>
-            <p>[.\HeXeD/.]</p>
-            <p></p>
-            <p>███ ACCÈS NIVEAU SIGMA AUTORISÉ ███</p>
-            <p></p>
-            <p>Notes secrètes, blacklists, relations</p>
-            <p>et informations hautement sensibles.</p>
-        </div>
+      <div id="classifiedData">
+        <p>MODULE 04: DOSSIERS CLASSIFIÉS</p>
+        <p></p>
+        <p>███ ACCÈS NIVEAU SIGMA REQUIS ███</p>
+        <p></p>
+        <p><span style="color: #ff0000; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);">=== Protocol HeXeD ===</span></p>
+        <p></p>
+        <p>███ ACCÈS NIVEAU SIGMA AUTORISÉ ███</p>
+        <p></p>
+        <p><strong></strong>--- MESSAGE RÉCUPÉRÉ / CANAL SÉCURISÉ ---</strong></p>
+        <p></p>
+        <p>Vous vouliez une solution discrète. La voici. Mon retour dans vos sphères dépendait de résultats, pas d'excuses. J'ai agi en conséquence.</p>
+        <p>L'accord était clair : éviter qu'un de vos cadres tombe sous la coupe du Consortium ou des autorités. Il ne devait rien dire. Il ne dira plus rien.</p>
+        <p>La cible a été officiellement déclarée morte. Surcharge implantaire cohérente, audits médicaux validés, chaîne de certification verrouillée. En effaçant les dernières traces, j'ai intercepté les premiers fichiers d'une enquête interne en préparation.</p>
+        <p>Obsidian Chrome devenait un facteur de risque. Trop présent sur le terrain, trop difficile à contenir. Le plan prévoyait sa disparition. Il a survécu. Une variable non prévue, mais temporaire.</p>
+        <p>Pour éviter une exposition immédiate, je lui ai fourni une prothèse fonctionnelle intégrant une mesure de neutralisation différée. Activation automatique après un certain délai, ou déclenchement dès son retour sur S9.</p>
+        <p>Les données nécessaires ont été transmises au groupe que vous financez indirectement. Officieusement, bien sûr. Ils assureront la continuité sans remonter jusqu'à vous.</p>
+        <p>De mon côté, j'attends la régularisation de ma situation. Poste, accès, protection. Comme convenu.</p>
+        <p>Considérez ce dossier comme traité.</p>
+        <p></p>
+        <p><strong>--- FIN DE TRANSMISSION ---</strong></p>
+      </div>
     </div>
 
     <div id="videoOverlay" class="video-overlay">
-        <video id="overlayVideo" muted>
-            <source src="" type="video/mp4">
-        </video>
+      <video id="overlayVideo" muted>
+        <source src="" type="video/mp4" />
+      </video>
     </div>
 
     <script src="datapad.js"></script>
-</body>
+  </body>
 </html>

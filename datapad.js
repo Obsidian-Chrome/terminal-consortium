@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const terminalInput = document.getElementById('terminalInput');
   const intrusionLevelEl = document.getElementById('intrusionLevel');
   const modulesUnlockedEl = document.getElementById('modulesUnlocked');
+  const unlockedModulesListEl = document.getElementById('unlockedModulesList');
   const timestampEl = document.getElementById('timestamp');
   const panelContent = document.getElementById('panelContent');
   const countdownEl = document.getElementById('countdown');
@@ -46,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = document.createElement('video');
     video.autoplay = true;
     video.muted = true;
+    video.playsInline = true;
+    video.preload = 'auto';
     
     const source = document.createElement('source');
     source.src = videoPath;
@@ -56,6 +59,24 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalOutput.appendChild(videoContainer);
     
     terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+    video.addEventListener('canplay', () => {
+      video.play().catch(err => {
+        console.log('Video play error:', err);
+        videoContainer.remove();
+        terminalInput.disabled = false;
+        terminalInput.focus();
+        if (callback) callback();
+      });
+    });
+
+    video.addEventListener('error', (e) => {
+      console.log('Video loading error:', e);
+      videoContainer.remove();
+      terminalInput.disabled = false;
+      terminalInput.focus();
+      if (callback) callback();
+    });
 
     video.onended = () => {
       videoContainer.remove();
@@ -118,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     const audio = new Audio(file);
-    audio.volume = 0.3;
+    audio.volume = 0.075;
     audio.play().catch(() => {});
   }
 
@@ -189,6 +210,18 @@ document.addEventListener('DOMContentLoaded', () => {
     intrusionLevelEl.textContent = percent + '%';
     modulesUnlockedEl.textContent = `${unlockedCount}/4`;
     
+    const unlockedNames = [];
+    if (modules.identity.unlocked) unlockedNames.push('IDENTITÉ');
+    if (modules.location.unlocked) unlockedNames.push('LOCALISATION');
+    if (modules.contracts.unlocked) unlockedNames.push('CONTRATS');
+    if (modules.classified.unlocked) unlockedNames.push('CLASSIFIÉ');
+    
+    if (unlockedNames.length > 0) {
+      unlockedModulesListEl.textContent = `[${unlockedNames.join(', ')}]`;
+    } else {
+      unlockedModulesListEl.textContent = '';
+    }
+    
     if (unlockedCount === 1 && !timerStarted) {
       startCountdown();
     }
@@ -205,16 +238,12 @@ document.addEventListener('DOMContentLoaded', () => {
     title.textContent = `MODULE: ${moduleName.toUpperCase()}`;
     moduleCard.appendChild(title);
 
-    const data = document.getElementById(dataId).innerHTML;
-    const lines = data.split('\n').map(l => l.replace(/<[^>]*>/g, '').trim()).filter(l => l);
-    
-    lines.forEach(line => {
-      const p = document.createElement('p');
-      p.textContent = line;
-      moduleCard.appendChild(p);
-    });
+    const dataContainer = document.getElementById(dataId);
+    const content = document.createElement('div');
+    content.innerHTML = dataContainer.innerHTML;
 
     panelContent.appendChild(moduleCard);
+    moduleCard.appendChild(content);
   }
 
   function updateTimestamp() {
@@ -349,15 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
             modules.identity.unlocked = true;
             updateStatus();
             printToTerminal('> [FAILSAFE] Protocole de sécurité activé.');
-            printToTerminal('> Module IDENTITY déverrouillé et affiché dans le panneau.');
-            addModuleToPanel('IDENTITÉ', 'identityData');
+            printToTerminal('> Module IDENTITY déverrouillé.');
           } else if (code.toUpperCase() === modules.identity.code) {
             playSound('success');
             modules.identity.unlocked = true;
             updateStatus();
             printToTerminal('> SUCCESS: Déchiffrement réussi!');
-            printToTerminal('> Module IDENTITY déverrouillé et affiché dans le panneau.');
-            addModuleToPanel('IDENTITÉ', 'identityData');
+            printToTerminal('> Module IDENTITY déverrouillé.');
           } else {
             printToTerminal('> ERROR: Code incorrect. Accès refusé.');
           }
@@ -383,8 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
               showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Enemy_Map_1-matte.mp4', () => {
-                printToTerminal('> Module LOCATION déverrouillé et affiché dans le panneau.');
-                addModuleToPanel('LOCALISATION', 'locationData');
+                printToTerminal('> Module LOCATION déverrouillé.');
               });
             }, 500);
           } else {
@@ -399,8 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
               
               setTimeout(() => {
                 showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Enemy_Map_1-matte.mp4', () => {
-                  printToTerminal('> Module LOCATION déverrouillé et affiché dans le panneau.');
-                  addModuleToPanel('LOCALISATION', 'locationData');
+                  printToTerminal('> Module LOCATION déverrouillé.');
                 });
               }, 500);
             } else {
@@ -429,9 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
             printToTerminal('> Chargement des données contractuelles...');
             
             setTimeout(() => {
-              showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Node_Chart_1.webm', () => {
-                printToTerminal('> Module CONTRACTS déverrouillé et affiché dans le panneau.');
-                addModuleToPanel('CONTRATS', 'contractsData');
+              showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Node_Chart_1-matte.mp4', () => {
+                printToTerminal('> Module CONTRACTS déverrouillé.');
               });
             }, 500);
           } else if (seq.toUpperCase() === modules.contracts.sequence) {
@@ -442,9 +466,8 @@ document.addEventListener('DOMContentLoaded', () => {
             printToTerminal('> Chargement des données contractuelles...');
             
             setTimeout(() => {
-              showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Node_Chart_1.webm', () => {
-                printToTerminal('> Module CONTRACTS déverrouillé et affiché dans le panneau.');
-                addModuleToPanel('CONTRATS', 'contractsData');
+              showVideoOverlay('Media/FootageCrate-4K_Modern_HUD_Node_Chart_1-matte.mp4', () => {
+                printToTerminal('> Module CONTRACTS déverrouillé.');
               });
             }, 500);
           } else {
@@ -637,17 +660,24 @@ document.addEventListener('DOMContentLoaded', () => {
           stopCountdown();
           updateStatus();
           printToTerminal('> [FAILSAFE] Protocole de sécurité activé.');
-          printToTerminal('> Module CLASSIFIÉ déverrouillé et affiché dans le panneau.');
-          addModuleToPanel('CLASSIFIÉ', 'classifiedData');
+          printToTerminal('> Module CLASSIFIÉ déverrouillé.');
           printToTerminal('═════════════════════════════════════════════════════');
-          printToTerminal('> Tous les modules déverrouillés. Basculement en mode complet...');
+          printToTerminal('> Tous les modules déverrouillés.');
+          printToTerminal('> Affichage des données dans le panneau...');
+          
+          addModuleToPanel('IDENTITÉ', 'identityData');
+          addModuleToPanel('LOCALISATION', 'locationData');
+          addModuleToPanel('CONTRATS', 'contractsData');
+          addModuleToPanel('CLASSIFIÉ', 'classifiedData');
+          
+          printToTerminal('> Basculement en mode complet...');
           printToTerminal('> Compteur arrêté.');
           
           setTimeout(() => {
             const mainLayout = document.querySelector('.main-layout');
             const modulesPanel = document.getElementById('modulesPanel');
             mainLayout.classList.add('complete-view');
-            modulesPanel.classList.add('full-view');
+            modulesPanel.classList.add('complete');
           }, 2000);
         } else {
           playSound('loading');
@@ -663,10 +693,17 @@ document.addEventListener('DOMContentLoaded', () => {
               stopCountdown();
               updateStatus();
               printToTerminal('> SUCCESS: Intrusion complétée!');
-              printToTerminal('> Module CLASSIFIÉ déverrouillé et affiché dans le panneau.');
-              addModuleToPanel('CLASSIFIÉ', 'classifiedData');
+              printToTerminal('> Module CLASSIFIÉ déverrouillé.');
               printToTerminal('═════════════════════════════════════════════════════');
-              printToTerminal('> Tous les modules déverrouillés. Basculement en mode complet...');
+              printToTerminal('> Tous les modules déverrouillés.');
+              printToTerminal('> Affichage des données dans le panneau...');
+              
+              addModuleToPanel('IDENTITÉ', 'identityData');
+              addModuleToPanel('LOCALISATION', 'locationData');
+              addModuleToPanel('CONTRATS', 'contractsData');
+              addModuleToPanel('CLASSIFIÉ', 'classifiedData');
+              
+              printToTerminal('> Basculement en mode complet...');
               printToTerminal('> Compteur arrêté.');
               
               setTimeout(() => {
@@ -716,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const mainLayout = document.querySelector('.main-layout');
           const modulesPanel = document.getElementById('modulesPanel');
           mainLayout.classList.add('complete-view');
-          modulesPanel.classList.add('full-view');
+          modulesPanel.classList.add('complete');
         }, 2000);
         break;
 
