@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     bootVideo.playbackRate = 2.0;
   });
 
-  bootVideo.addEventListener('canplay', () => {
+  bootVideo.load();
+  
+  bootVideo.addEventListener('loadeddata', () => {
     bootVideo.play().catch(err => {
       console.log('Autoplay prevented:', err);
       loadingVideoContainer.style.display = 'none';
@@ -59,8 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalOutput.appendChild(videoContainer);
     
     terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    
+    video.load();
 
-    video.addEventListener('canplay', () => {
+    video.addEventListener('loadeddata', () => {
       video.play().catch(err => {
         console.log('Video play error:', err);
         videoContainer.remove();
